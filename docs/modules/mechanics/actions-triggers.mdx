@@ -24,6 +24,7 @@ In the future, some features that are currently used in Kits may be transferred 
   | `<kit/>` | Applies a [Kit](/docs/modules/gear/kits). |
   | `<fill/>` | Places blocks in a block-bounded region. |
   | `<replace-item> </replace-item>` | Finds and replaces certain items. |
+  | `<take-payment> </take-payment>` | Allow players to pay with items in their inventory to trigger an action. |
 </div>
 
 ### Action Attributes
@@ -96,8 +97,8 @@ In the future, some features that are currently used in Kits may be transferred 
   |---|---|---|---|
   | `region` | <span className="badge badge--secondary" title="Can be either this attribute or a sub-element.">Property</span><span className="badge badge--danger">Required</span>The region to fill in. Multiple regions will be treated as an union. | [Region](/docs/modules/mechanics/regions) |
   | `material` | <span className="badge badge--danger">Required</span>The filling material. | [Single Material Pattern](/docs/reference/items/inventory#material-matchers) |
-  | `filter` | Filters which blocks get affected. *May impact preformace for large fills.* | [Filter](/docs/modules/mechanics/filters) |
-  | `events` | Calls events for block placements and removals, which will make it affected by other filters and PGM features. *May impact preformace for large fills.* | <span className="badge badge--primary">true/false</span> | false |
+  | `filter` | Filters which blocks get affected. *May impact performance for large fills.* | [Filter](/docs/modules/mechanics/filters) |
+  | `events` | Calls events for block placements and removals, which will make it affected by other filters and PGM features. *May impact performance for large fills.* | <span className="badge badge--primary">true/false</span> | false |
 </div>
 
 ### Replace Item Attributes/Elements
@@ -111,6 +112,19 @@ In the future, some features that are currently used in Kits may be transferred 
   | `keep-enchants` | Enchantments on the old item will be applied to the new item. | <span className="badge badge--primary">true/false</span> |
   | `ignore-metadata` | Filters which entities to remove. | <span className="badge badge--primary">true/false</span> |
   | `amount` | Match for item stacks that have a certain amount of items in a range. | <span className="badge badge--primary">Range</span> |
+</div>
+
+### Take-Payment Attributes/Elements
+
+<div className="table-container">
+  | Attribute | Description | Value |
+  |---|---|---|
+  | `<payment />` | <span className="badge badge--secondary" title="Can be either this attribute or a sub-element.">Property</span><span className="badge badge--danger">Required</span>An individual payment. | [Item Attributes](/docs/modules/gear/items#item-attributes) |
+  | `<success-action />` | <span className="badge badge--secondary" title="Can be either this attribute or a sub-element.">Property</span>The action to trigger upon a successful payment. | <span className="badge badge--primary">Action</span> |
+  | `<fail-action />` | <span className="badge badge--secondary" title="Can be either this attribute or a sub-element.">Property</span>The action to trigger upon a failed payment. | <span className="badge badge--primary">Action</span> |
+  | `material` | <span className="badge badge--danger">Required</span>The item to display as an icon. | [Material Name](/docs/reference/items/inventory#material-matchers) |
+  | `price` | The amount of a currency needed to purchase. | <span className="badge badge--primary">Number</span> |
+  | `currency` | The currency needed to purchase. | [Filter](/docs/modules/mechanics/filters) |
 </div>
 
 ## Trigger Element
@@ -168,7 +182,7 @@ This example uses the `expose` attribute in Action to allow moderators to enable
 a "Blitz Mode" using the `/action` command. Moderators must have the `GAMEPLAY` permissions
 in order to use `/action`. See [Commands](/docs/commands/main) for more details.
 
-```
+```xml
 <actions>
     <!-- Moderator uses "/action trigger start-blitz" to start this Action -->
     <action id="start-blitz" expose="true" scope="match">
